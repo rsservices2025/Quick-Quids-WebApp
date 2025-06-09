@@ -1,19 +1,33 @@
 // client/js/adminPanel.js
 
-// Appwrite सेवाओं को ग्लोबल स्कोप से एक्सेस करें
-const account = window.appwriteAccount;
-const databases = window.appwriteDatabases;
-const storage = window.appwriteStorage;
-const functions = window.appwriteFunctions; // Appwrite Functions सर्विस
-const Query = window.AppwriteQuery;
-const ID = window.AppwriteID;
-const Permission = window.AppwritePermission;
-const Role = window.AppwriteRole;
+// Appwrite सेवाओं को appwriteConfig.js से इम्पोर्ट करें
+import {
+    appwriteAccount,
+    appwriteDatabases,
+    appwriteStorage,
+    appwriteFunctions,
+    AppwriteQuery,
+    AppwriteID,
+    AppwritePermission,
+    AppwriteRole,
+    DATABASE_ID,
+    USERS_COLLECTION_ID,
+    QRS_COLLECTION_ID,
+    TRANSACTIONS_COLLECTION_ID
+} from './appwriteConfig.js';
 
-const DATABASE_ID = window.APPWRITE_DATABASE_ID;
-const USERS_COLLECTION_ID = window.APPWRITE_USERS_COLLECTION_ID;
-const QRS_COLLECTION_ID = window.APPWRITE_QRS_COLLECTION_ID;
-const TRANSACTIONS_COLLECTION_ID = window.APPWRITE_TRANSACTIONS_COLLECTION_ID;
+// utils.js से फंक्शंस इम्पोर्ट करें
+import { showMessage, isValidEmail, isValidPassword, showComingSoon } from './utils.js';
+
+// Appwrite सेवाओं को आसान नामों में असाइन करें (वैकल्पिक, कोड को थोड़ा छोटा करने के लिए)
+const account = appwriteAccount;
+const databases = appwriteDatabases;
+const storage = appwriteStorage;
+const functions = appwriteFunctions;
+const Query = AppwriteQuery;
+const ID = AppwriteID;
+const Permission = AppwritePermission;
+const Role = AppwriteRole;
 
 let currentAdminUserId = null;
 
@@ -121,7 +135,7 @@ document.getElementById('qrSetupForm').addEventListener('submit', async (event) 
         // 1. QR इमेज को Appwrite Storage में अपलोड करें
         const uploadedFile = await storage.createFile(
             'qr_images', // आपकी 'qr_images' बकेट ID (सुनिश्चित करें कि यह बकेट बनाई गई है)
-            AppwriteID.unique(),
+            ID.unique(),
             qrImageFile
         );
         console.log('QR Image uploaded:', uploadedFile);
@@ -130,7 +144,7 @@ document.getElementById('qrSetupForm').addEventListener('submit', async (event) 
         await databases.createDocument(
             DATABASE_ID,
             QRS_COLLECTION_ID,
-            AppwriteID.unique(),
+            ID.unique(),
             {
                 qrImageFileId: uploadedFile.$id,
                 title: qrTitle,
@@ -140,9 +154,9 @@ document.getElementById('qrSetupForm').addEventListener('submit', async (event) 
                 isActive: true // डिफ़ॉल्ट रूप से एक्टिव
             },
             [
-                AppwritePermission.read(AppwriteRole.label('admin')),
-                AppwritePermission.read(AppwriteRole.label('user')), // यूज़र्स को QR देखने के लिए
-                AppwritePermission.create(AppwriteRole.label('admin'))
+                Permission.read(Role.label('admin')),
+                Permission.read(Role.label('user')), // यूज़र्स को QR देखने के लिए
+                Permission.create(Role.label('admin'))
             ]
         );
         showMessage('success', 'QR setup and uploaded successfully!');
@@ -276,9 +290,9 @@ async function loadQrPayCollection() {
             DATABASE_ID,
             TRANSACTIONS_COLLECTION_ID,
             [
-                AppwriteQuery.equal('transactionType', 'qr_pay'),
-                AppwriteQuery.equal('status', 'pending'), // केवल पेंडिंग रिक्वेस्ट दिखाएं
-                AppwriteQuery.orderDesc('$createdAt')
+                Query.equal('transactionType', 'qr_pay'),
+                Query.equal('status', 'pending'), // केवल पेंडिंग रिक्वेस्ट दिखाएं
+                Query.orderDesc('$createdAt')
             ]
         );
 
@@ -295,7 +309,7 @@ async function loadQrPayCollection() {
             const userProfile = (await databases.listDocuments(
                 DATABASE_ID,
                 USERS_COLLECTION_ID,
-                [AppwriteQuery.equal('userId', transaction.userId)]
+                [Query.equal('userId', transaction.userId)]
             )).documents[0];
             const userEmail = userProfile ? userProfile.email : 'N/A';
 
@@ -335,7 +349,7 @@ async function updateQrPayStatus(transactionId, userId, amount, newStatus) {
             const userProfile = (await databases.listDocuments(
                 DATABASE_ID,
                 USERS_COLLECTION_ID,
-                [AppwriteQuery.equal('userId', userId)]
+                [Query.equal('userId', userId)]
             )).documents[0];
 
             if (userProfile) {

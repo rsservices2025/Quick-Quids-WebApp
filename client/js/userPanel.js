@@ -1,18 +1,31 @@
 // client/js/userPanel.js
 
-// Appwrite सेवाओं को ग्लोबल स्कोप से एक्सेस करें
-const account = window.appwriteAccount;
-const databases = window.appwriteDatabases;
-const storage = window.appwriteStorage;
-const Query = window.AppwriteQuery;
-const ID = window.AppwriteID;
-const Permission = window.AppwritePermission;
-const Role = window.AppwriteRole;
+// Appwrite सेवाओं को appwriteConfig.js से इम्पोर्ट करें
+import {
+    appwriteAccount,
+    appwriteDatabases,
+    appwriteStorage,
+    AppwriteQuery,
+    AppwriteID,
+    AppwritePermission,
+    AppwriteRole,
+    DATABASE_ID,
+    USERS_COLLECTION_ID,
+    QRS_COLLECTION_ID,
+    TRANSACTIONS_COLLECTION_ID
+} from './appwriteConfig.js';
 
-const DATABASE_ID = window.APPWRITE_DATABASE_ID;
-const USERS_COLLECTION_ID = window.APPWRITE_USERS_COLLECTION_ID;
-const QRS_COLLECTION_ID = window.APPWRITE_QRS_COLLECTION_ID;
-const TRANSACTIONS_COLLECTION_ID = window.APPWRITE_TRANSACTIONS_COLLECTION_ID;
+// utils.js से फंक्शंस इम्पोर्ट करें
+import { showMessage, showComingSoon } from './utils.js';
+
+// Appwrite सेवाओं को आसान नामों में असाइन करें (वैकल्पिक, कोड को थोड़ा छोटा करने के लिए)
+const account = appwriteAccount;
+const databases = appwriteDatabases;
+const storage = appwriteStorage;
+const Query = AppwriteQuery;
+const ID = AppwriteID;
+const Permission = AppwritePermission;
+const Role = AppwriteRole;
 
 let currentUserId = null;
 let selectedQrId = null;
@@ -96,7 +109,7 @@ async function loadQrOptions() {
         const response = await databases.listDocuments(
             DATABASE_ID,
             QRS_COLLECTION_ID,
-            [AppwriteQuery.equal('isActive', true)] // केवल एक्टिव QRs दिखाएं
+            [Query.equal('isActive', true)] // केवल एक्टिव QRs दिखाएं
         );
 
         const qrOptionsList = document.getElementById('qrOptionsList');
@@ -153,7 +166,8 @@ async function selectQrOption(qr) {
     // QR इमेज लोड करें
     if (qrImageFileId) {
         try {
-            const fileUrl = storage.getFileDownload(qrImageFileId);
+            // Appwrite Storage में 'qr_images' बकेट की रीड परमिशन 'role:any' या 'role:user' पर होनी चाहिए
+            const fileUrl = storage.getFileDownload('qr_images', qrImageFileId); // बकेट ID और फाइल ID
             selectedQrImage.src = fileUrl;
             selectedQrImage.style.display = 'block';
         } catch (error) {
@@ -203,7 +217,7 @@ document.getElementById('qrPayForm').addEventListener('submit', async (event) =>
         await databases.createDocument(
             DATABASE_ID,
             TRANSACTIONS_COLLECTION_ID,
-            AppwriteID.unique(),
+            ID.unique(),
             {
                 userId: currentUserId,
                 transactionType: 'qr_pay',
@@ -214,8 +228,8 @@ document.getElementById('qrPayForm').addEventListener('submit', async (event) =>
                 status: 'pending' // डिफ़ॉल्ट स्टेटस
             },
             [
-                AppwritePermission.read(AppwriteRole.user(currentUserId)), // यूज़र खुद अपनी ट्रांजैक्शन पढ़ सके
-                AppwritePermission.read(AppwriteRole.label('admin')) // एडमिन सभी ट्रांजैक्शन पढ़ सके
+                Permission.read(Role.user(currentUserId)), // यूज़र खुद अपनी ट्रांजैक्शन पढ़ सके
+                Permission.read(Role.label('admin')) // एडमिन सभी ट्रांजैक्शन पढ़ सके
             ]
         );
         showMessage('success', 'Request successfully! Wait 2 - 5 min for update.');
@@ -237,8 +251,8 @@ async function loadUserTransactions() {
             DATABASE_ID,
             TRANSACTIONS_COLLECTION_ID,
             [
-                AppwriteQuery.equal('userId', currentUserId), // केवल इस यूज़र की ट्रांजैक्शन
-                AppwriteQuery.orderDesc('$createdAt') // लेटेस्ट पहले
+                Query.equal('userId', currentUserId), // केवल इस यूज़र की ट्रांजैक्शन
+                Query.orderDesc('$createdAt') // लेटेस्ट पहले
             ]
         );
 

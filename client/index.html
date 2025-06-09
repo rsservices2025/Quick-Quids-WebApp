@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quick-Quids - Login</title>
     <link rel="stylesheet" href="css/style.css">
-    <!-- Appwrite SDK CDN (यह सुनिश्चित करता है कि Appwrite ऑब्जेक्ट उपलब्ध हो) -->
+    <!-- Appwrite SDK CDN for UMD (Universal Module Definition) -->
+    <!-- यह Appwrite SDK को सीधे ग्लोबल 'Appwrite' ऑब्जेक्ट के रूप में लोड करता है -->
     <script src="https://unpkg.com/appwrite@12.0.0/dist/appwrite.js"></script>
 </head>
 <body>
@@ -48,22 +49,10 @@
         </section>
     </div>
 
+    <!-- आपकी JavaScript फ़ाइलें, अब type="module" के बिना -->
     <script src="js/appwriteConfig.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/auth.js"></script>
 
-    <script>
-        // Forgot password और लॉगिन फॉर्म के बीच स्विच करने का लॉजिक
-        document.getElementById('forgotPasswordLink').addEventListener('click', (e) => {
-            e.preventDefault();
-            document.getElementById('loginSection').style.display = 'none';
-            document.getElementById('forgotPasswordSection').style.display = 'block';
-        });
-
-        document.getElementById('backToLoginLink').addEventListener('click', () => {
-            document.getElementById('forgotPasswordSection').style.display = 'none';
-            document.getElementById('loginSection').style.display = 'block';
-        });
-    </script>
 </body>
 </html>

@@ -1,11 +1,23 @@
 // client/js/auth.js
 
-// Appwrite सेवाओं को ग्लोबल स्कोप से एक्सेस करें
-const account = window.appwriteAccount;
-const databases = window.appwriteDatabases;
-const Query = window.AppwriteQuery;
-const USERS_COLLECTION_ID = window.APPWRITE_USERS_COLLECTION_ID;
-const DATABASE_ID = window.APPWRITE_DATABASE_ID;
+// Appwrite सेवाओं को appwriteConfig.js से इम्पोर्ट करें
+import {
+    appwriteAccount,
+    appwriteDatabases,
+    AppwriteQuery,
+    AppwriteID,
+    DATABASE_ID,
+    USERS_COLLECTION_ID
+} from './appwriteConfig.js';
+
+// utils.js से फंक्शंस इम्पोर्ट करें
+import { showMessage, isValidEmail, isValidPassword } from './utils.js';
+
+// Appwrite सेवाओं को आसान नामों में असाइन करें (वैकल्पिक, कोड को थोड़ा छोटा करने के लिए)
+const account = appwriteAccount;
+const databases = appwriteDatabases;
+const Query = AppwriteQuery;
+const ID = AppwriteID;
 
 // --- लॉगिन फंक्शन ---
 async function handleLogin(event) {
@@ -211,13 +223,13 @@ document.addEventListener('DOMContentLoaded', () => {
         changePasswordForm.addEventListener('submit', handleChangePassword);
     }
 
-    // पासवर्ड भूल गए फॉर्म (index.html या forgot_password.html पर)
+    // पासवर्ड भूल गए फॉर्म (index.html पर)
     const forgotPasswordForm = document.getElementById('forgotPasswordForm');
     if (forgotPasswordForm) {
         forgotPasswordForm.addEventListener('submit', handleForgotPassword);
     }
 
-    // पासवर्ड रीसेट फॉर्म (reset_password.html पर)
+    // पासवर्ड रीसेट फॉर्म (reset_password.html पर, यह HTML आपको बनाना होगा)
     const resetPasswordForm = document.getElementById('resetPasswordForm');
     if (resetPasswordForm) {
         resetPasswordForm.addEventListener('submit', handleResetPassword);
@@ -255,4 +267,25 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     checkUserSessionAndDisplayWelcome();
+
+    // Forgot password और लॉगिन फॉर्म के बीच स्विच करने का लॉजिक (index.html के लिए)
+    const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+    const backToLoginLink = document.getElementById('backToLoginLink');
+    const loginSection = document.getElementById('loginSection');
+    const forgotPasswordSection = document.getElementById('forgotPasswordSection');
+
+    if (forgotPasswordLink && loginSection && forgotPasswordSection) {
+        forgotPasswordLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginSection.style.display = 'none';
+            forgotPasswordSection.style.display = 'block';
+        });
+    }
+
+    if (backToLoginLink && loginSection && forgotPasswordSection) {
+        backToLoginLink.addEventListener('click', () => {
+            forgotPasswordSection.style.display = 'none';
+            loginSection.style.display = 'block';
+        });
+    }
 });

@@ -2,6 +2,7 @@
 
 // Appwrite SDK अब HTML में सीधे <script> टैग से लोड हो रहा है (appwrite.js),
 // इसलिए 'Appwrite' ऑब्जेक्ट ग्लोबल स्कोप में उपलब्ध होगा।
+// इस फ़ाइल में कोई import/export स्टेटमेंट नहीं होनी चाहिए।
 
 const client = new Appwrite.Client();
 

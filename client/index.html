@@ -5,9 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quick-Quids - Login</title>
     <link rel="stylesheet" href="css/style.css">
-    <!-- Appwrite SDK CDN for UMD (Universal Module Definition) -->
-    <!-- यह Appwrite SDK को सीधे ग्लोबल 'Appwrite' ऑब्जेक्ट के रूप में लोड करता है -->
+    
+    <!-- **** JavaScript फ़ाइलें लोड करने का क्रम बहुत ज़रूरी है **** -->
+    <!-- 1. Appwrite SDK CDN सबसे पहले लोड होगा, यह 'Appwrite' ग्लोबल ऑब्जेक्ट बनाता है -->
     <script src="https://unpkg.com/appwrite@12.0.0/dist/appwrite.js"></script>
+    
+    <!-- 2. आपकी कॉन्फ़िग फ़ाइल, जो Appwrite ऑब्जेक्ट का उपयोग करती है और ग्लोबल वैरिएबल्स सेट करती है -->
+    <script src="js/appwriteConfig.js"></script>
+    
+    <!-- 3. आपकी यूटिलिटी फ़ाइल, जो सामान्य फंक्शंस को ग्लोबल करती है -->
+    <script src="js/utils.js"></script>
+    
+    <!-- 4. आपकी ऑथेंटिकेशन फ़ाइल, जो Appwrite और यूटिलिटी फंक्शंस का उपयोग करती है -->
+    <script src="js/auth.js"></script>
+    
+    <!-- index.html के लिए कोई विशेष userPanel.js या adminPanel.js की ज़रूरत नहीं -->
+
 </head>
 <body>
     <div class="container">
@@ -48,11 +61,6 @@
             </form>
         </section>
     </div>
-
-    <!-- आपकी JavaScript फ़ाइलें, अब type="module" के बिना -->
-    <script src="js/appwriteConfig.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/auth.js"></script>
 
 </body>
 </html>

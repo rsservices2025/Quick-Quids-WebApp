@@ -1,6 +1,7 @@
 // client/js/userPanel.js
 
 // Appwrite सेवाओं को ग्लोबल स्कोप से एक्सेस करें (window ऑब्जेक्ट के माध्यम से)
+// इस फ़ाइल में कोई import/export स्टेटमेंट नहीं होनी चाहिए।
 const account = window.appwriteAccount;
 const databases = window.appwriteDatabases;
 const storage = window.appwriteStorage;

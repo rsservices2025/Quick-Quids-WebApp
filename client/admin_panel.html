@@ -6,8 +6,22 @@
     <title>Quick-Quids - Admin Panel</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/admin_panel.css">
-    <!-- Appwrite SDK CDN for UMD -->
+
+    <!-- **** JavaScript फ़ाइलें लोड करने का क्रम बहुत ज़रूरी है **** -->
+    <!-- 1. Appwrite SDK CDN सबसे पहले लोड होगा -->
     <script src="https://unpkg.com/appwrite@12.0.0/dist/appwrite.js"></script>
+
+    <!-- 2. आपकी कॉन्फ़िग फ़ाइल -->
+    <script src="js/appwriteConfig.js"></script>
+
+    <!-- 3. आपकी यूटिलिटी फ़ाइल -->
+    <script src="js/utils.js"></script>
+
+    <!-- 4. आपकी ऑथेंटिकेशन फ़ाइल (लॉगआउट, पासवर्ड बदलने के लिए) -->
+    <script src="js/auth.js"></script>
+
+    <!-- 5. एडमिन पैनल की खास फ़ाइल सबसे आखिर में -->
+    <script src="js/adminPanel.js"></script>
 </head>
 <body>
     <div class="container">
@@ -190,11 +204,5 @@
             </div>
         </div>
     </div>
-
-    <!-- आपकी JavaScript फ़ाइलें, अब type="module" के बिना -->
-    <script src="js/appwriteConfig.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/adminPanel.js"></script>
 </body>
 </html>

@@ -1,5 +1,7 @@
 // client/js/utils.js
 
+// इस फ़ाइल में कोई import/export स्टेटमेंट नहीं होनी चाहिए।
+
 // अलर्ट मैसेज दिखाने और छिपाने के लिए
 function showMessage(type, message) {
     const messageContainer = document.getElementById('messageContainer');

@@ -1,10 +1,11 @@
 // client/js/auth.js
 
 // Appwrite सेवाओं को ग्लोबल स्कोप से एक्सेस करें (window ऑब्जेक्ट के माध्यम से)
+// इस फ़ाइल में कोई import/export स्टेटमेंट नहीं होनी चाहिए।
 const account = window.appwriteAccount;
 const databases = window.appwriteDatabases;
 const Query = window.AppwriteQuery;
-const ID = window.AppwriteID; // अगर ज़रूरत पड़े
+const ID = window.AppwriteID;
 const USERS_COLLECTION_ID = window.APPWRITE_USERS_COLLECTION_ID;
 const DATABASE_ID = window.APPWRITE_DATABASE_ID;
 
@@ -123,7 +124,8 @@ async function handleChangePassword(event) {
         await account.updatePassword(newPassword, oldPassword);
         showMessage('success', 'Password changed successfully!');
         document.getElementById('changePasswordForm').reset();
-    } catch (error) {
+    }
+    catch (error) {
         console.error('Password change error:', error);
         if (error.code === 401) { // Incorrect old password
             showMessage('error', 'Incorrect old password. Please try again.');

@@ -1,33 +1,25 @@
 // client/js/adminPanel.js
 
-// Appwrite सेवाओं को appwriteConfig.js से इम्पोर्ट करें
-import {
-    appwriteAccount,
-    appwriteDatabases,
-    appwriteStorage,
-    appwriteFunctions,
-    AppwriteQuery,
-    AppwriteID,
-    AppwritePermission,
-    AppwriteRole,
-    DATABASE_ID,
-    USERS_COLLECTION_ID,
-    QRS_COLLECTION_ID,
-    TRANSACTIONS_COLLECTION_ID
-} from './appwriteConfig.js';
+// Appwrite सेवाओं को ग्लोबल स्कोप से एक्सेस करें (window ऑब्जेक्ट के माध्यम से)
+const account = window.appwriteAccount;
+const databases = window.appwriteDatabases;
+const storage = window.appwriteStorage;
+const functions = window.appwriteFunctions;
+const Query = window.AppwriteQuery;
+const ID = window.AppwriteID;
+const Permission = window.AppwritePermission;
+const Role = window.AppwriteRole;
 
-// utils.js से फंक्शंस इम्पोर्ट करें
-import { showMessage, isValidEmail, isValidPassword, showComingSoon } from './utils.js';
+const DATABASE_ID = window.APPWRITE_DATABASE_ID;
+const USERS_COLLECTION_ID = window.APPWRITE_USERS_COLLECTION_ID;
+const QRS_COLLECTION_ID = window.APPWRITE_QRS_COLLECTION_ID;
+const TRANSACTIONS_COLLECTION_ID = window.APPWRITE_TRANSACTIONS_COLLECTION_ID;
 
-// Appwrite सेवाओं को आसान नामों में असाइन करें (वैकल्पिक, कोड को थोड़ा छोटा करने के लिए)
-const account = appwriteAccount;
-const databases = appwriteDatabases;
-const storage = appwriteStorage;
-const functions = appwriteFunctions;
-const Query = AppwriteQuery;
-const ID = AppwriteID;
-const Permission = AppwritePermission;
-const Role = AppwriteRole;
+// utils.js से फंक्शंस को ग्लोबल स्कोप से एक्सेस करें
+const showMessage = window.showMessage;
+const isValidEmail = window.isValidEmail;
+const isValidPassword = window.isValidPassword;
+const showComingSoon = window.showComingSoon;
 
 let currentAdminUserId = null;
 
@@ -320,7 +312,7 @@ async function loadQrPayCollection() {
                 <td>${transaction.payeeName || '-'}</td>
                 <td>${transaction.transactionRefId || '-'}</td>
                 <td>${transaction.status}</td>
-                <td>
+                                <td>
                     <button class="btn btn-small" onclick="updateQrPayStatus('${transaction.$id}', '${transaction.userId}', ${transaction.amount}, 'completed')">Approve</button>
                     <button class="btn btn-small" onclick="updateQrPayStatus('${transaction.$id}', '${transaction.userId}', ${transaction.amount}, 'rejected')" style="background-color: var(--error-red);">Reject</button>
                 </td>

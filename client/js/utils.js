@@ -1,7 +1,7 @@
 // client/js/utils.js
 
 // अलर्ट मैसेज दिखाने और छिपाने के लिए
-export function showMessage(type, message) {
+function showMessage(type, message) {
     const messageContainer = document.getElementById('messageContainer');
     if (!messageContainer) return;
 
@@ -14,18 +14,18 @@ export function showMessage(type, message) {
 }
 
 // ईमेल वैलिडेट करने के लिए
-export function isValidEmail(email) {
+function isValidEmail(email) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(String(email).toLowerCase());
 }
 
 // पासवर्ड वैलिडेट करने के लिए (कम से कम 8 अक्षर)
-export function isValidPassword(password) {
+function isValidPassword(password) {
     return password.length >= 8;
 }
 
 // Coming Soon पॉपअप दिखाने के लिए
-export function showComingSoon() {
+function showComingSoon() {
     const overlay = document.createElement('div');
     overlay.className = 'coming-soon-overlay active';
     overlay.innerHTML = `
@@ -41,10 +41,17 @@ export function showComingSoon() {
 }
 
 // Coming Soon पॉपअप छिपाने के लिए
-export function hideComingSoon() {
+function hideComingSoon() {
     const overlay = document.querySelector('.coming-soon-overlay');
     if (overlay) {
         overlay.classList.remove('active');
         setTimeout(() => overlay.remove(), 300); // ट्रांजीशन के बाद एलिमेंट हटा दें
     }
 }
+
+// इन फंक्शंस को 'window' ऑब्जेक्ट पर अटैच करें ताकि वे ग्लोबल रूप से उपलब्ध हों
+window.showMessage = showMessage;
+window.isValidEmail = isValidEmail;
+window.isValidPassword = isValidPassword;
+window.showComingSoon = showComingSoon;
+window.hideComingSoon = hideComingSoon;

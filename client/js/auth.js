@@ -1,23 +1,17 @@
 // client/js/auth.js
 
-// Appwrite सेवाओं को appwriteConfig.js से इम्पोर्ट करें
-import {
-    appwriteAccount,
-    appwriteDatabases,
-    AppwriteQuery,
-    AppwriteID,
-    DATABASE_ID,
-    USERS_COLLECTION_ID
-} from './appwriteConfig.js';
+// Appwrite सेवाओं को ग्लोबल स्कोप से एक्सेस करें (window ऑब्जेक्ट के माध्यम से)
+const account = window.appwriteAccount;
+const databases = window.appwriteDatabases;
+const Query = window.AppwriteQuery;
+const ID = window.AppwriteID; // अगर ज़रूरत पड़े
+const USERS_COLLECTION_ID = window.APPWRITE_USERS_COLLECTION_ID;
+const DATABASE_ID = window.APPWRITE_DATABASE_ID;
 
-// utils.js से फंक्शंस इम्पोर्ट करें
-import { showMessage, isValidEmail, isValidPassword } from './utils.js';
-
-// Appwrite सेवाओं को आसान नामों में असाइन करें (वैकल्पिक, कोड को थोड़ा छोटा करने के लिए)
-const account = appwriteAccount;
-const databases = appwriteDatabases;
-const Query = AppwriteQuery;
-const ID = AppwriteID;
+// utils.js से फंक्शंस को ग्लोबल स्कोप से एक्सेस करें
+const showMessage = window.showMessage;
+const isValidEmail = window.isValidEmail;
+const isValidPassword = window.isValidPassword;
 
 // --- लॉगिन फंक्शन ---
 async function handleLogin(event) {

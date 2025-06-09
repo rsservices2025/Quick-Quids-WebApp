@@ -1,0 +1,5 @@
+# Node modules (dependencies)
+node_modules/
+
+# Appwrite functions code (this will be deployed on Appwrite, not Vercel)
+appwrite-functions/

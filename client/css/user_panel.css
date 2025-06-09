@@ -1,0 +1,91 @@
+/* client/css/user_panel.css */
+
+.user-panel-content {
+    display: flex;
+    margin-top: 20px;
+}
+
+.sidebar {
+    width: 200px;
+    padding-right: 20px;
+    border-right: 1px solid var(--border-color);
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+    display: block;
+    padding: 10px 15px;
+    background-color: var(--light-blue);
+    color: var(--dark-blue);
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar ul li a:hover,
+.sidebar ul li a.active {
+    background-color: var(--primary-blue);
+    color: var(--white);
+}
+
+.main-content {
+    flex-grow: 1;
+    padding-left: 20px;
+}
+
+.feature-section {
+    display: none; /* By default hidden, shown via JS */
+}
+
+.feature-section.active {
+    display: block;
+}
+
+.transaction-list table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.transaction-list table th,
+.transaction-list table td {
+    border: 1px solid var(--border-color);
+    padding: 10px;
+    text-align: left;
+}
+
+.transaction-list table th {
+    background-color: var(--primary-blue);
+    color: var(--white);
+}
+
+.qr-option {
+    border: 1px solid var(--border-color);
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: var(--light-bg);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.qr-option:hover {
+    background-color: var(--light-blue);
+}
+
+.qr-image-display {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 15px auto;
+    border: 1px solid var(--border-color);
+    padding: 5px;
+}

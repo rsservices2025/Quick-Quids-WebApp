@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick-Quids - User Panel</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/user_panel.css">
+    <!-- Appwrite SDK CDN -->
+    <script src="https://unpkg.com/appwrite@12.0.0/dist/appwrite.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 id="welcomeText">Welcome To Quick-Quids</h1>
+            <nav>
+                <ul>
+                    <li><a href="#" id="logoutButton">Logout</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <div id="messageContainer" class="alert-message" style="display: none;"></div>
+
+        <div class="user-panel-content">
+            <div class="sidebar">
+                <ul>
+                    <li><a href="#" id="qrPayLink" class="active">QR Pay (Rupay Card)</a></li>
+                    <li><a href="#" id="impsLink">IMPS</a></li>
+                    <li><a href="#" id="neftLink">NEFT</a></li>
+                    <li><a href="#" id="creditCardBillLink">Credit Card Bill Payment</a></li>
+                    <li><a href="#" id="transactionsLink">Transactions</a></li>
+                    <li><a href="#" id="changePasswordUserLink">Change Password</a></li>
+                </ul>
+            </div>
+
+            <div class="main-content">
+                <!-- QR Pay Section -->
+                <section id="qrPaySection" class="feature-section active">
+                    <h2>QR Pay (Rupay Card)</h2>
+                    <div id="qrOptionsList">
+                        <!-- QR options will be loaded here by JS -->
+                        <p>Loading QR options...</p>
+                    </div>
+                    <div id="qrDetailsForm" style="display: none;">
+                        <h3>Pay with QR</h3>
+                        <img id="selectedQrImage" src="" alt="QR Code" class="qr-image-display" style="display: none;">
+                        <p id="qrDescriptionText"></p>
+                        <form id="qrPayForm">
+                            <div class="form-group">
+                                <label for="payAmount">Amount:</label>
+                                <input type="number" id="payAmount" placeholder="Enter amount" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="payeeName">Payee Name:</label>
+                                <input type="text" id="payeeName" placeholder="Enter payee name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="transactionId">Transaction ID:</label>
+                                <input type="text" id="transactionId" placeholder="Enter transaction ID" required>
+                            </div>
+                            <button type="submit" class="btn">Submit Payment Request</button>
+                            <button type="button" class="btn" id="backToQrOptions" style="background-color: grey;">Back to Options</button>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- IMPS Section (Coming Soon) -->
+                <section id="impsSection" class="feature-section">
+                    <h2>IMPS</h2>
+                    <p>This feature is coming soon!</p>
+                </section>
+
+                <!-- NEFT Section (Coming Soon) -->
+                <section id="neftSection" class="feature-section">
+                    <h2>NEFT</h2>
+                    <p>This feature is coming soon!</p>
+                </section>
+
+                <!-- Credit Card Bill Payment Section (Coming Soon) -->
+                <section id="creditCardBillSection" class="feature-section">
+                    <h2>Credit Card Bill Payment</h2>
+                    <p>This feature is coming soon!</p>
+                </section>
+
+                <!-- Transactions Section -->
+                <section id="transactionsSection" class="feature-section">
+                    <h2>My Transactions</h2>
+                    <div class="transaction-list">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Amount</th>
+                                    <th>Payee</th>
+                                    <th>Ref ID</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="userTransactionsTableBody">
+                                <!-- Transactions will be loaded here by JS -->
+                                <tr><td colspan="6">No transactions found.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Change Password Section -->
+                <section id="changePasswordUserSection" class="feature-section">
+                    <h2>Change Password</h2>
+                    <form id="changePasswordForm">
+                        <div class="form-group">
+                            <label for="oldPassword">Old Password:</label>
+                            <input type="password" id="oldPassword" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="newPassword">New Password:</label>
+                            <input type="password" id="newPassword" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmNewPassword">Confirm New Password:</label>
+                            <input type="password" id="confirmNewPassword" required>
+                        </div>
+                        <button type="submit" class="btn">Change Password</button>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/appwriteConfig.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/userPanel.js"></script>
+</body>
+</html>

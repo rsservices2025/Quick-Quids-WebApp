@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick-Quids - Admin Panel</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin_panel.css">
+    <!-- Appwrite SDK CDN -->
+    <script src="https://unpkg.com/appwrite@12.0.0/dist/appwrite.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 id="welcomeText">Welcome To Quick-Quids - Admin Panel</h1>
+            <nav>
+                <ul>
+                    <li><a href="#" id="logoutButton">Logout</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <div id="messageContainer" class="alert-message" style="display: none;"></div>
+
+        <div class="admin-panel-content">
+            <div class="sidebar">
+                <ul>
+                    <li><a href="#" id="setUpQrLink" class="active">Set-Up QR</a></li>
+                    <li><a href="#" id="impsCollectionLink">IMPS Collection</a></li>
+                    <li><a href="#" id="neftCollectionLink">NEFT Collection</a></li>
+                    <li><a href="#" id="creditCardBillRequestLink">Credit Card Bill Payment Request</a></li>
+                    <li><a href="#" id="usersListLink">Users List</a></li>
+                    <li><a href="#" id="createRetailerLink">Create A Retailer</a></li>
+                    <li><a href="#" id="qrPayCollectionLink">QR Pay Collection</a></li>
+                    <li><a href="#" id="changePasswordAdminLink">Change Password</a></li>
+                </ul>
+            </div>
+
+            <div class="main-content">
+                <!-- Set-Up QR Section -->
+                <section id="setUpQrSection" class="feature-section active">
+                    <h2>Set-Up New QR</h2>
+                    <form id="qrSetupForm">
+                        <div class="form-group">
+                            <label for="qrTitle">QR Title:</label>
+                            <input type="text" id="qrTitle" placeholder="e.g., Electricity Bill Payment" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="qrDescription">Description (Optional):</label>
+                            <textarea id="qrDescription" placeholder="Any additional notes about this QR"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="qrAmount">Amount (₹):</label>
+                            <input type="number" id="qrAmount" placeholder="Enter fixed amount (leave 0 for custom pay)">
+                        </div>
+                        <div class="form-group">
+                            <label for="isCustomAmountAllowed">Allow Custom Amount?</label>
+                            <input type="checkbox" id="isCustomAmountAllowed"> (If checked, users can pay any amount even if fixed amount is set)
+                        </div>
+                        <div class="form-group">
+                            <label for="qrImage">QR Image (Upload):</label>
+                            <input type="file" id="qrImage" accept="image/*" required>
+                        </div>
+                        <div class="qr-preview">
+                            <img id="qrImagePreview" src="" alt="QR Preview" style="display: none;">
+                        </div>
+                        <button type="submit" class="btn">Upload QR</button>
+                    </form>
+                </section>
+
+                <!-- IMPS Collection Section (Coming Soon) -->
+                <section id="impsCollectionSection" class="feature-section">
+                    <h2>IMPS Collection</h2>
+                    <p>This feature is coming soon!</p>
+                </section>
+
+                <!-- NEFT Collection Section (Coming Soon) -->
+                <section id="neftCollectionSection" class="feature-section">
+                    <h2>NEFT Collection</h2>
+                    <p>This feature is coming soon!</p>
+                </section>
+
+                <!-- Credit Card Bill Payment Request Section (Coming Soon) -->
+                <section id="creditCardBillRequestSection" class="feature-section">
+                    <h2>Credit Card Bill Payment Requests</h2>
+                    <p>This feature is coming soon!</p>
+                </section>
+
+                <!-- Users List Section -->
+                <section id="usersListSection" class="feature-section">
+                    <h2>Users List</h2>
+                    <div class="user-list">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody">
+                                <!-- Users will be loaded here by JS -->
+                                <tr><td colspan="6">Loading users...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Create A Retailer Section -->
+                <section id="createRetailerSection" class="feature-section">
+                    <h2>Create New Retailer</h2>
+                    <form id="createRetailerForm">
+                        <div class="form-group">
+                            <label for="retailerName">Name:</label>
+                            <input type="text" id="retailerName" placeholder="Retailer's Full Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="retailerEmail">Email:</label>
+                            <input type="email" id="retailerEmail" placeholder="Retailer's Email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="retailerPassword">Password:</label>
+                            <input type="password" id="retailerPassword" placeholder="Set Initial Password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="retailerPhoneNumber">Phone Number:</label>
+                            <input type="text" id="retailerPhoneNumber" placeholder="Retailer's Phone Number" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="retailerAddress">Address:</label>
+                            <input type="text" id="retailerAddress" placeholder="Retailer's Address" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="retailerState">State:</label>
+                            <input type="text" id="retailerState" placeholder="State" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="retailerCity">City:</label>
+                            <input type="text" id="retailerCity" placeholder="City" required>
+                        </div>
+                        <button type="submit" class="btn">Create Retailer Account</button>
+                    </form>
+                </section>
+
+                <!-- QR Pay Collection Section -->
+                <section id="qrPayCollectionSection" class="feature-section">
+                    <h2>QR Pay Collection Requests</h2>
+                    <div class="qr-pay-collection-list">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>User Email</th>
+                                    <th>Amount</th>
+                                    <th>Payee</th>
+                                    <th>Ref ID</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="qrPayRequestsTableBody">
+                                <!-- QR Pay requests will be loaded here by JS -->
+                                <tr><td colspan="6">No QR Pay requests.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Change Password Section -->
+                <section id="changePasswordAdminSection" class="feature-section">
+                    <h2>Change Password</h2>
+                    <form id="changePasswordForm">
+                        <div class="form-group">
+                            <label for="oldPassword">Old Password:</label>
+                            <input type="password" id="oldPassword" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="newPassword">New Password:</label>
+                            <input type="password" id="newPassword" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmNewPassword">Confirm New Password:</label>
+                            <input type="password" id="confirmNewPassword" required>
+                        </div>
+                        <button type="submit" class="btn">Change Password</button>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/appwriteConfig.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/adminPanel.js"></script>
+</body>
+</html>

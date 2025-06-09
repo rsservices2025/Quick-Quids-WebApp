@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick-Quids - Login</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Appwrite SDK CDN (यह सुनिश्चित करता है कि Appwrite ऑब्जेक्ट उपलब्ध हो) -->
+    <script src="https://unpkg.com/appwrite@12.0.0/dist/appwrite.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 id="welcomeText">Welcome To Quick-Quids</h1>
+        </header>
+
+        <div id="messageContainer" class="alert-message" style="display: none;"></div>
+
+        <section id="loginSection">
+            <h2>User Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email:</label>
+                    <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password:</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn">Login</button>
+            </form>
+            <p style="text-align: center; margin-top: 15px;">
+                <a href="#" id="forgotPasswordLink" style="color: var(--primary-blue); text-decoration: none;">Forgot Password?</a>
+            </p>
+        </section>
+
+        <!-- Forgot Password Modal/Section (Hidden by default) -->
+        <section id="forgotPasswordSection" style="display: none;">
+            <h2>Forgot Password</h2>
+            <form id="forgotPasswordForm">
+                <div class="form-group">
+                    <label for="forgotEmail">Enter your registered Email:</label>
+                    <input type="email" id="forgotEmail" placeholder="Email" required>
+                </div>
+                <button type="submit" class="btn">Send Reset Link</button>
+                <button type="button" id="backToLoginLink" class="btn" style="background-color: grey;">Back to Login</button>
+            </form>
+        </section>
+    </div>
+
+    <script src="js/appwriteConfig.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+
+    <script>
+        // Forgot password और लॉगिन फॉर्म के बीच स्विच करने का लॉजिक
+        document.getElementById('forgotPasswordLink').addEventListener('click', (e) => {
+            e.preventDefault();
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('forgotPasswordSection').style.display = 'block';
+        });
+
+        document.getElementById('backToLoginLink').addEventListener('click', () => {
+            document.getElementById('forgotPasswordSection').style.display = 'none';
+            document.getElementById('loginSection').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
